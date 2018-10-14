@@ -18,7 +18,7 @@ namespace StockPriceNotice_forSlack
             // 株価を取得したい銘柄コードを入力し、Yahoo Financeを開く
             Console.WriteLine("4桁の銘柄コードを入力してください。");
             var stockNumber = Console.ReadLine();
-            Console.WriteLine("銘柄コード" + stockNumber);
+            Console.WriteLine("銘柄コード：" + stockNumber);
             var urlstring = $"http://stocks.finance.yahoo.co.jp/stocks/detail/?code={stockNumber}.T";
 
             // 指定した銘柄コードのページのHTMLをストリームで取得する
