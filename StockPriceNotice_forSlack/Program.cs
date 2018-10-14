@@ -10,6 +10,9 @@ namespace StockPriceNotice_forSlack
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("4桁の銘柄コードを入力してください。");
+            string stockNumber = Console.ReadLine();
+            Console.WriteLine("銘柄コード" + stockNumber);
         }
     }
 }
