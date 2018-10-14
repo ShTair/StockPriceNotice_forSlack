@@ -15,7 +15,7 @@ namespace StockPriceNotice_forSlack
             Console.WriteLine("4桁の銘柄コードを入力してください。");
             string stockNumber = Console.ReadLine();
             Console.WriteLine("銘柄コード" + stockNumber);
-            var urlstring = string.Format("http://stocks.finance.yahoo.co.jp/stocks/detail/?code={0}.T", stockNumber));
+            var urlstring = string.Format("http://stocks.finance.yahoo.co.jp/stocks/detail/?code={0}.T", stockNumber);
 
             // 指定した銘柄コードのページのHTMLをストリームで取得する
             var doc = default(IHtmlDocument);
@@ -26,10 +26,10 @@ namespace StockPriceNotice_forSlack
                 doc = parser.ParseAsync(stream);
             }
 
-            // Xpathを指定し銘柄名、株価部分を取得する
-            var stockName = doc.DocumentNode.SelectStringNode("//*[@id=\"main\"]/div[3]/div[1]/div[2]/table/tr/td[2]");
-            var priceNode = doc.DocumentNode.SelectStringNode("//*[@id=\"main\"]/div[3]/div[1]/div[2]/table/tr/td[2]");
-
+            // クエリーセレクタを指定し株価部分を取得する
+            var stockName = doc.QuerySelector("main th[class=symbol");
+            var priceNode = doc.QuerySelector("#main td[class=stoksPrice]");
+            
             // 取得した株価をStringからintにパースする
             var stockPrice = int.Parse(priceNode.InnerText);
             Console.WriteLine("銘柄名：" + stockName);
