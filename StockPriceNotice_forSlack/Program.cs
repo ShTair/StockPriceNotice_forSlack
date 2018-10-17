@@ -16,30 +16,45 @@ namespace StockPriceNotice_forSlack
         static void Main()
         {
             // 株価を取得したい銘柄コードを入力し、Yahoo Financeを開く
-            Console.WriteLine("4桁の銘柄コードを入力してください。");
-            var stockNumber = Console.ReadLine();
-            Console.WriteLine("銘柄コード：" + stockNumber);
-            var urlstring = $"http://stocks.finance.yahoo.co.jp/stocks/detail/?code={stockNumber}.T";
+            while (true)
+            {
+                string stockNumber = string.Empty;
+                string Name = string.Empty;
 
-            // 指定した銘柄コードのページのHTMLをストリームで取得する
-            WebClient client = new WebClient();
-            client.Encoding = System.Text.Encoding.UTF8;
-            string sorce = client.DownloadString(urlstring);
-            var parser = new HtmlParser();
-            var doc = parser.Parse(sorce);
+                Console.WriteLine("========== Stock Price Search ==========");
+                Console.WriteLine("4桁の銘柄コードを入力してください。");
+                stockNumber = Console.ReadLine();
+                Console.WriteLine("銘柄コード：" + stockNumber);
+                var urlstring = $"http://stocks.finance.yahoo.co.jp/stocks/detail/?code={stockNumber}.T";
 
-            // クエリーセレクタを指定し株価部分を取得する
-            var stockName = doc.QuerySelector("#main th[class=symbol]");
-            var priceNode = doc.QuerySelector("#main td[class=stoksPrice]");
 
-            string Name = stockName.TextContent.Replace(",", string.Empty);
+                // 指定した銘柄コードのページのHTMLをストリームで取得する
+                WebClient client = new WebClient();
+                client.Encoding = System.Text.Encoding.UTF8;
+                string sorce = client.DownloadString(urlstring);
+                var parser = new HtmlParser();
+                var doc = parser.Parse(sorce);
 
-            // 取得した株価をStringからintにパースする
-            int.TryParse(priceNode.TextContent, System.Globalization.NumberStyles.AllowThousands, null, out int stockPrice);
+                // クエリーセレクタを指定し株価部分を取得する
+                var stockName = doc.QuerySelector("#main th[class=symbol]");
+                var priceNode = doc.QuerySelector("#main td[class=stoksPrice]");
 
-            Console.WriteLine("銘柄名：" + Name);
-            Console.WriteLine("現在株価：{0}円", stockPrice);
-            Console.Read();
+                if (stockName == null)
+                {
+                    Console.WriteLine("*銘柄が見つかりませんでした");
+                }
+                else
+                {
+                    Name = stockName.TextContent.Replace(",", string.Empty);
+                    // 取得した株価をStringからintにパースする
+                    int.TryParse(priceNode.TextContent, System.Globalization.NumberStyles.AllowThousands, null, out int stockPrice);
+
+                    Console.WriteLine("銘柄名：" + Name);
+                    Console.WriteLine("現在株価：{0}円", stockPrice);
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }
