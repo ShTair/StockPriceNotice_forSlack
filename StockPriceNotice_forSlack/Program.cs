@@ -22,9 +22,9 @@ namespace StockPriceNotice_forSlack
                 string Name = string.Empty;
 
                 Console.WriteLine("========== Stock Price Search ==========");
-                Console.WriteLine("4桁の銘柄コードを入力してください。");
+                Console.Write("4桁の銘柄コードを入力してください：");
                 stockNumber = Console.ReadLine();
-                Console.WriteLine("銘柄コード：" + stockNumber);
+                Console.WriteLine(" [銘柄コード]：" + stockNumber);
                 var urlstring = $"http://stocks.finance.yahoo.co.jp/stocks/detail/?code={stockNumber}.T";
 
 
@@ -49,8 +49,9 @@ namespace StockPriceNotice_forSlack
                     // 取得した株価をStringからintにパースする
                     int.TryParse(priceNode.TextContent, System.Globalization.NumberStyles.AllowThousands, null, out int stockPrice);
 
-                    Console.WriteLine("銘柄名：" + Name);
-                    Console.WriteLine("現在株価：{0}円", stockPrice);
+                    Console.WriteLine(" [銘柄名]：" + Name);
+                    Console.WriteLine(" [現在株価]：{0}円", stockPrice);
+                    Console.WriteLine("========================================");
                 }
 
                 Console.WriteLine();
