@@ -38,7 +38,10 @@ namespace StockPriceNotice_forSlack
                 // クエリーセレクタを指定し株価部分を取得する
                 var stockName = doc.QuerySelector("#main th[class=symbol]");
                 var priceNode = doc.QuerySelector("#main td[class=stoksPrice]");
-
+                if (stockNumber.Equals("exit"))
+                {
+                    break;
+                }
                 if (stockName == null)
                 {
                     Console.WriteLine("*銘柄が見つかりませんでした");
@@ -53,7 +56,7 @@ namespace StockPriceNotice_forSlack
                     Console.WriteLine(" [現在株価]：{0}円", stockPrice);
                     Console.WriteLine("========================================");
                 }
-
+                
                 Console.WriteLine();
             }
         }
